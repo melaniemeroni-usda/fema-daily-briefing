@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>FEMA Daily Briefing</title>
 </head>
 <body>
+  <p id="status">Redirecting to today's FEMA Daily Ops Briefing...</p>
 
-Redirecting to today's FEMA Daily Ops Briefing...
-
-<script>
-fetch('latest.json')
-  .then(r => r.json())
-  .then(d => window.location.href = d.url);
-</script>
-
+  <script>
+    fetch('./latest.json?ts=' + Date.now())
+      .then(r => {
+        if (!r.ok) throw new Error('Could not load latest briefing');
+        return r.json();
+      })
+      .then(d => {
+        if (!d.url) throw new Error('No briefing URL found');
+        window.location.replace(d.url);
+      })
+      .catch(error => {
+        document.getElementById('status').textContent =
+          'Unable to open the latest briefing: ' + error.message;
+      });
+  </script>
 </body>
 </html>
-
