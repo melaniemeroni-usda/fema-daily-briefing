@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FEMA Daily Briefing</title>
+</head>
+<body>
+
+Redirecting to today's FEMA Daily Ops Briefing...
+
+<script>
+fetch('latest.json')
+  .then(r => r.json())
+  .then(d => window.location.href = d.url);
+</script>
+
+</body>
+</html>
